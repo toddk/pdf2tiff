@@ -29,8 +29,7 @@ app.route('/convert').post( (req, res) => {
     busboy.on('finish', () => {
         console.log('Upload complete');
         var metadata = path.join('./out/', `${uploadedFile}.txt`);
-        console.log('Metadata: '  + util.inspect(formData));
-        fs.writeFileSync(metadata, util.inspect(formData) , 'utf-8', (err) => {
+        fs.writeFileSync(metadata, `{'email': '${formData.get('email')}', 'name': '${formData.get('name')}'}` , 'utf-8', (err) => {
             if (err) console.log(err);
             console.log("Metadata written to file for use after conversion");
         });
