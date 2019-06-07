@@ -1,0 +1,27 @@
+{
+  "name": "pdf2tiff",
+  "version": "1.0.0",
+  "description": "A geopdf to geotiff conversion web service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toddk/pdf2tiff.git"
+  },
+  "author": "toddkrokowski@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toddk/pdf2tiff/issues"
+  },
+  "homepage": "https://github.com/toddk/pdf2tiff#readme",
+  "dependencies": {
+    "busboy": "^0.3.1",
+    "connect-busboy": "0.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "path": "^0.12.7",
+    "pug": "^2.0.3"
+  }
+}
