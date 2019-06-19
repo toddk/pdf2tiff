@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Alert, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 export default class Upload extends Component {
@@ -62,19 +62,26 @@ export default class Upload extends Component {
         return (
             <div>
                 <Alert key={0} variant={this.state.submitStatus} show={this.state.submitted}>{this.state.message}</Alert>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Control value={this.state.email} type="email" placeholder="Email" name="email" required={true} onChange={this.handleChange} />
-                        <Form.Control value={this.state.name} type="text" placeholder="Name" name="name" required={true} onChange={this.handleChange} />
-                        <Form.Control value={this.state.organization} type="text" placeholder="Organization" name="organization" onChange={this.handleChange} />
-                    </Form.Group>
+                <Container>
+                    <Row className="justify-content-md-center"> 
+                        <Col md="auto">
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Control value={this.state.email} type="email" placeholder="Email" name="email" required={true} onChange={this.handleChange} />
+                                <Form.Control value={this.state.name} type="text" placeholder="Name" name="name" required={true} onChange={this.handleChange} />
+                                <Form.Control value={this.state.organization} type="text" placeholder="Organization" name="organization" onChange={this.handleChange} />
+                            </Form.Group>
 
-                    <Form.Group controlId="formBasicFile">
-                        <Form.Label>GeoPDF File to Convert</Form.Label>
-                        <Form.Control type="file" accepts=".pdf" Text="Choose File..." onChange={this.addFile} required={true} />
-                    </Form.Group>
-                    <Button type="submit">Submit</Button>
-                </Form>
+                            <Form.Group controlId="formBasicFile">
+                                <Form.Label>GeoPDF File to Convert</Form.Label>
+                                <Form.Control type="file" accepts=".pdf" Text="Choose File..." onChange={this.addFile} required={true} />
+                            </Form.Group>
+                            <Button type="submit">Submit</Button>
+                        </Form>
+                        </Col>
+                    </Row>    
+                </Container>
+                
             </div>
         )
     }
