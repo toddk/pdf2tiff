@@ -18,6 +18,7 @@ export default class Upload extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addFile = this.addFile.bind(this);
+
     }
  
     handleSubmit(e) {
@@ -31,7 +32,7 @@ export default class Upload extends Component {
         data.append('organization', this.state.organization);
         data.append('file', this.state.file);
         
-        axios.post('http://localhost:3000/convert', data)
+        axios.post(process.env.API_URL, data)
             .then(res => {
                 this.setState({message: `The upload was a success. Now converting, you will be emailed at ${this.state.email} when it is ready for download.`,
                                 email: '',

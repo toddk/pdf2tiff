@@ -1,12 +1,14 @@
 const express = require('express');
 const fs = require('fs');
 const Busboy = require('busboy');
+const dotenv = require('dotenv');
 const util = require('util');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = 3000;
 
+dotenv.config();
+const port = process.env.APP_SERVER_PORT;
 app.use(cors());
 
 app.route('/convert').post( (req, res) => {

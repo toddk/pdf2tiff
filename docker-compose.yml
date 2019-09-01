@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  server:
+    build: ./
+    expose:
+      - ${APP_SERVER_PORT}
+    environment:
+      API_HOST: ${API_HOST}
+      APP_SERVER_PORT: ${APP_SERVER_PORT}
+    ports:
+      - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+    volumes:
+      - ./:/usr/src/app
+    command: npm start
+  client:
+    build: ./client
+    expose:
+      - ${REACT_APP_PORT}
+    environment:
+      REACT_APP_PORT: ${REACT_APP_PORT}
+    ports:
+      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+    volumes:
+      - ./client/src:/usr/src/app/src
+    links:
+      - server
+    command:
+      npm run start
