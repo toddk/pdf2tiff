@@ -4,6 +4,8 @@ RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositor
 
 RUN apk update
 RUN apk add --no-cache --update \
+    bash \
+    openrc \
     gdal-dev \
     gdal \
     nodejs \
@@ -11,9 +13,13 @@ RUN apk add --no-cache --update \
     inotify-tools\
     && rm -rf /var/cache/apk/*
 
+RUN mkdir -p /usr/src/app/in
+RUN mkdir -p /usr/src/app/out
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY scripts/*.sh ./
 
 RUN npm install
 
