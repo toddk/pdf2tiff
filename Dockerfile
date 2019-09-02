@@ -13,13 +13,13 @@ RUN apk add --no-cache --update \
     inotify-tools\
     && rm -rf /var/cache/apk/*
 
-RUN mkdir -p /usr/src/app/in
-RUN mkdir -p /usr/src/app/out
-
 WORKDIR /usr/src/app
 
+RUN mkdir -p /usr/data/in
+RUN mkdir -p /usr/data/out
+
 COPY package*.json ./
-COPY scripts/*.sh ./
+COPY scripts/*.sh ./scripts/
 
 RUN npm install
 

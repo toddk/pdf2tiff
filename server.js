@@ -5,7 +5,16 @@ const dotenv = require('dotenv');
 const util = require('util');
 const path = require('path');
 const cors = require('cors');
+const exec = require('child_process').exec;
 const app = express();
+
+exec(`sh scripts/translate.sh /usr/data/in/ /usr/data/out/`, (error, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    if (error) {
+        console.log(`exec error: ${error}`);
+    }
+});
 
 dotenv.config();
 const port = process.env.APP_SERVER_PORT;
