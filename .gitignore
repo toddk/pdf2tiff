@@ -3,3 +3,5 @@ client/node_modules
 in/
 out/
 .env
+combined.log
+error.log
