@@ -31,8 +31,8 @@ export default class Upload extends Component {
         data.append('name', this.state.name);
         data.append('organization', this.state.organization);
         data.append('file', this.state.file);
-        
-        axios.post(process.env.API_URL, data)
+        console.log(`API URL ${process.env.REACT_APP_API_URL}`)
+        axios.post(process.env.REACT_APP_API_URL, data)
             .then(res => {
                 this.setState({message: `The upload was a success. Now converting, you will be emailed at ${this.state.email} when it is ready for download.`,
                                 email: '',
@@ -43,6 +43,7 @@ export default class Upload extends Component {
                 
             })
             .catch(error => {
+                console.log(`Error for form: ${error}`);
                 this.setState({message: 'The upload failed. Please try again.',
                     submitStatus: 'danger',
                     submitted: true});
@@ -75,7 +76,7 @@ export default class Upload extends Component {
 
                             <Form.Group controlId="formBasicFile">
                                 <Form.Label>GeoPDF File to Convert</Form.Label>
-                                <Form.Control type="file" accepts=".pdf" Text="Choose File..." onChange={this.addFile} required={true} />
+                                <Form.Control type="file" accepts=".pdf" text="Choose File..." onChange={this.addFile} required={true} />
                             </Form.Group>
                             <Button type="submit">Submit</Button>
                         </Form>
