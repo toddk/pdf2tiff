@@ -7,9 +7,8 @@ fi
 
 inputfile=$1
 outputdir=$2
+file_only=$(basename $inputfile)
 
-filename="${inputfile%.*}"
-echo $filename
-echo $inputfile
+filename="${file_only%.*}"
 
 gdal_translate "$inputfile" "$outputdir/$filename.tiff" -of GTiff

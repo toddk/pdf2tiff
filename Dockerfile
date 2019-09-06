@@ -1,17 +1,9 @@
-FROM alpine:latest
+FROM fedora:28
 
-RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
-
-RUN apk update
-RUN apk add --no-cache --update \
-    bash \
-    openrc \
-    gdal-dev \
+RUN yum install -y \
     gdal \
     nodejs \
-    nodejs-npm \
-    inotify-tools\
-    && rm -rf /var/cache/apk/*
+    inotify-tools
 
 WORKDIR /usr/src/app
 
