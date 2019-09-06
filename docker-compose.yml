@@ -28,3 +28,8 @@ services:
       - server
     command:
       npm run start
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
