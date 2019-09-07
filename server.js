@@ -42,6 +42,23 @@ app.route('/uploads').get((req, res) => {
         .then(userRequests => res.json(userRequests))
         .catch(err => res.status(404).json({ msg: 'No User Requests Found'}));
 });
+
+app.route('/download/:requestId').get((req, res) => {
+    console.log(req.params);
+    UserRequest.findOne({id: req.params.requestId})
+        .then(result => {
+            console.log(`Filename ${result.filename}`);
+            const headers = {
+                'Content-Disposition' : `attachment; filename=${path.basename(result.filename)}`,
+                'Content-Type' : 'image/tiff'
+            };
+            res.sendFile(result.filename, headers);
+        })
+        .catch(err => {
+            console.log(err);
+            res.send("Sorry, didn't work!")
+        });
+});
 app.route('/convert').post( (req, res) => {
     var busboy = new Busboy({headers: req.headers});
     let formData = new Map();
@@ -80,8 +97,10 @@ app.route('/convert').post( (req, res) => {
             res.end('Upload complete!');
         });
 
+        let outputFilename = path.join(outdir, `${path.basename(uploadedFile, "pdf")}tiff`);
+        console.log(outputFilename);
 
-        exec(`sh scripts/translate.sh ${fullPathToUpload} ${outdir}`, (error, stdout, stderr) => {
+        exec(`sh scripts/translate.sh ${fullPathToUpload} ${outputFilename}`, (error, stdout, stderr) => {
             logger.info("Starting translate script...");
             logger.info(stdout);
             logger.warn(stderr);
@@ -92,10 +111,11 @@ app.route('/convert').post( (req, res) => {
                 logger.error(`exec error: ${error}`);
                 update = { status: "error" };
             } else {
-                update = { status: "converted" };
+                let newMd5 = md5File.sync(outputFilename);
+                update = { status: "converted", filename: outputFilename, md5: newMd5 };
             }
 
-            UserRequest.findOneAndUpdate({md5}, update).then(result => { logger.info(result); })
+            UserRequest.findOneAndUpdate({md5}, update).then(result => { console.log(`${req.protocol}://${req.get('host')}/download/${result.id}`); logger.info(result); })
         });
     });
 
